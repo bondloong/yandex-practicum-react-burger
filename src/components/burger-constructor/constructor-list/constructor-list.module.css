@@ -1,0 +1,40 @@
+.list { 
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-height: 464px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--text-inactive-color) var(--background-element);
+}
+
+.list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.list::-webkit-scrollbar-track {
+  background: var(--background-element);
+}
+
+.list::-webkit-scrollbar-thumb {
+  background-color: var(--text-inactive-color);
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  list-style: none;
+}
+
+.fix_item {
+  margin-left: 32px;
+}
+
+.fix_item:first-child {
+  margin-bottom: 16px;
+}
+
+.fix_item:last-child {
+  margin-top: 16px;
+}

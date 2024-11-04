@@ -1,0 +1,17 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  color: var(--text-primary-light);
+  background-color: var(--background-alt);
+}
+
+.main {
+  display: grid;
+  grid-template-columns: repeat(2, 600px);
+  gap: 40px;
+  max-width: 1280px;
+  max-height: calc(100vh - 88px);
+  margin: 0 auto;
+  overflow: hidden;
+}

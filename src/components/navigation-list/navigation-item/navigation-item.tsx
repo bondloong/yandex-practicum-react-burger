@@ -2,38 +2,29 @@ import { BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer
 import styles from './navigation-item.module.css';
 
 interface INavigationItem {
-	iconType: string;
+	iconType: keyof typeof ICONS;
 	text: string;
 	link?: string;
 	active?: boolean;
 }
 
-const NavigationItem = ({ iconType, text, link = '/', active }: INavigationItem) => {
-	let icon;
+const ICONS = {
+	burger: BurgerIcon,
+	list: ListIcon,
+	profile: ProfileIcon,
+};
 
-	switch (iconType) {
-		case 'burger':
-			icon = <BurgerIcon type={active ? 'primary' : 'secondary'} />;
-			break;
-		case 'list':
-			icon = <ListIcon type={active ? 'primary' : 'secondary'} />;
-			break;
-		case 'profile':
-			icon = <ProfileIcon type={active ? 'primary' : 'secondary'} />;
-			break;
-		default:
-			icon = null;
-	}
+const NavigationItem = ({ iconType, text, link = '/', active }: INavigationItem) => {
+	const Icon = ICONS[iconType];
 
 	return (
-		<li className={`${styles.item}`}>
+		<li className={styles.item}>
 			<a href={link} className={`${styles.link} pt-4 pr-5 pb-4 pl-5 ${active ? '' : styles.inactive}`}>
-				{icon}
-				{text}
+				{Icon && <Icon type={active ? 'primary' : 'secondary'} />}
+				<span>{text}</span>
 			</a>
 		</li>
 	);
 };
-
 
 export default NavigationItem;

@@ -14,7 +14,7 @@ export interface IIngredient {
 }
 
 
-export interface IingredientsData {
+export interface IIngredientsData {
 	isLoading: boolean,
 	isError: boolean,
 	data: IIngredient[] | null

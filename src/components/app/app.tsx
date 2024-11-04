@@ -1,4 +1,4 @@
-import { IingredientsData } from '../../utils/prop-types';
+import { IIngredientsData } from '../../utils/prop-types';
 import AppHeader from '../app-header/app-header';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 const URL_API = 'https://norma.nomoreparties.space/api';
 
 function App() {
-	const [ingredients, setIngredients] = useState<IingredientsData>({
+	const [ingredients, setIngredients] = useState<IIngredientsData>({
 		isLoading: true,
 		isError: false,
 		data: null,

@@ -9,7 +9,8 @@
 }
 
 .header {
-  line-height: 64;
+  /* stylelint-disable-next-line declaration-property-unit-allowed-list */
+  line-height: 64px;
 }
 
 .close {

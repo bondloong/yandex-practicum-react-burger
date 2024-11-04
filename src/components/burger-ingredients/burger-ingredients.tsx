@@ -2,12 +2,12 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-ingredients.module.css';
 
 import IngredientList from './ingredient-list/ingredient-list';
-import { IIngredient, ingredientListProps } from '../../utils/prop-types';
+import { IIngredient } from '../../utils/prop-types';
 import { useState } from 'react';
 
 const BurgerIngredients = ({ ingredients }: {ingredients:IIngredient[]}) => {
 	const [activeTab, setActiveTab] = useState('bun');
-
+ 
 	const tabs = [
 		{ key: 'bun', label: 'Булки' },
 		{ key: 'sauce', label: 'Соусы' },
@@ -24,7 +24,7 @@ const BurgerIngredients = ({ ingredients }: {ingredients:IIngredient[]}) => {
 			<div className={`${styles.tabs} mb-10`}>
 				{tabs.map((tab) => (
 					<Tab
-						key={`${tab.key}Tab`}
+						key={tab.key}
 						active={activeTab === tab.key}
 						value={tab.key}
 						onClick={handleTabClick}

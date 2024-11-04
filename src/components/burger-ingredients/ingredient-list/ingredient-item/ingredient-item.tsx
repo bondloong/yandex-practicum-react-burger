@@ -6,21 +6,19 @@ import { ingredientItemProps } from '../../../../utils/prop-types';
 import styles from './ingredient-item.module.css';
 import Modal from '../../../modal/modal';
 import IngredientDetails from '../../../ingredient-details/ingredient-details';
-import { useState } from 'react';
+import useShowModal from '../../../../hooks/use-show-modal';
 
 const IngredientItem = ({
 	ingredient,
 	counter = 0,
 }: ingredientItemProps) => {
-	const [isModalOpen, setIsModalOpen] = useState(false);
-
-	const toggleModal = () => setIsModalOpen((prev) => !prev);
+	const { isShowModal, openModal, closeModal } = useShowModal(false);
 
 	const { name, image, price } = ingredient;
 
 	return (
 		<>
-			<li className={styles.ingredient} onClick={toggleModal}>
+			<li className={styles.ingredient} onClick={openModal}>
 				{counter > 0 && (
 					<Counter count={counter} size='default' extraClass={styles.counter} />
 				)}
@@ -32,8 +30,8 @@ const IngredientItem = ({
 				<span>{name}</span>
 			</li>
 
-			{isModalOpen && (
-				<Modal text='Детали ингредиента' closeModal={toggleModal}>
+			{isShowModal && (
+				<Modal text='Детали ингредиента' closeModal={closeModal}>
 					<IngredientDetails ingredient={ingredient} />
 				</Modal>
 			)}

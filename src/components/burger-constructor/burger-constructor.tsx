@@ -4,13 +4,10 @@ import { IIngredient } from '../../utils/prop-types';
 import ConstructorList from './constructor-list/constructor-list';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
-import { useState } from 'react';
-
+import useShowModal from '../../hooks/use-show-modal';
 const BurgerConstructor = ({ ingredients = [] }: { ingredients: IIngredient[] }) => {
-	const [isModalOpen, setIsModalOpen] = useState(false);
-
-	const toggleModal = () => setIsModalOpen((prev) => !prev);
-
+	const { isShowModal, openModal, closeModal } = useShowModal(false);
+	
 	const totalPrice = ingredients.reduce((sum, item) => sum + (item.price || 0), 0);
 
 	if (ingredients.length === 0) {
@@ -25,13 +22,13 @@ const BurgerConstructor = ({ ingredients = [] }: { ingredients: IIngredient[] })
 					{totalPrice}
 					<CurrencyIcon type='primary' />
 				</span>
-				<Button htmlType='button' type='primary' size='large' onClick={toggleModal}>
+				<Button htmlType='button' type='primary' size='large' onClick={openModal}>
 					Оформить заказ
 				</Button>
 			</div>
 			{/* Отображаем модальное окно при открытии */}
-			{isModalOpen && (
-				<Modal closeModal={toggleModal}>
+			{isShowModal && (
+				<Modal closeModal={closeModal}>
 					<OrderDetails />
 				</Modal>
 			)}

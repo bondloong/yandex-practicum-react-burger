@@ -2,14 +2,14 @@ import styles from './constructor-list.module.css';
 import ConstructorItem from './constructor-item/constructor-item';
 import update from 'immutability-helper';
 
-import { constructorListProps, ingredientItemProps } from '../../../utils/prop-types';
+import { IConstructorListProps, IIngredientItemProps } from '../../../utils/prop-types';
 import { memo, useCallback, useEffect, useState } from 'react';
 import { useAppSelector } from '../../../services/slices';
 import { useDrop } from 'react-dnd';
 import ConstructorItemBun from './constructor-item/constructor-item-bun/constructor-item-bun';
 import ConstructorItemSkeleton from './constructor-item/constructor-item-skeleton/constructor-item-skeleton';
 
-const ConstructorList = memo(function ConstructorList({ onDropHandler }: constructorListProps) {
+const ConstructorList = memo(function ConstructorList({ onDropHandler }: IConstructorListProps) {
   const { bun, ingredients } = useAppSelector((store) => store.burgerConstructor);
 
   const [constructorIngredients, setConstructorIngredients] = useState(ingredients);
@@ -46,7 +46,7 @@ const ConstructorList = memo(function ConstructorList({ onDropHandler }: constru
 
   const [, dropTarget] = useDrop({
     accept: 'ingredient',
-    drop(ingredient: ingredientItemProps) {
+    drop(ingredient: IIngredientItemProps) {
       onDropHandler(ingredient);
     },
   });

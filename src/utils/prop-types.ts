@@ -35,34 +35,34 @@ export interface IOrderData {
 	data: IOrderResponse | null;
 }
 
-export interface modalProps {
+export interface IModalProps {
 	text?: string,
 	closeModal: () => void,
 	children: React.ReactNode
 }
 
-export interface modalOverlayProps {
+export interface IModalOverlayProps {
 	onClick: (() => void) | null
 }
 
-export interface ingredientItemProps {
+export interface IIngredientItemProps {
 	ingredient: IIngredient,
 	counter?: number;
 }
 
-export interface ingredientListProps {
+export interface IIngredientListProps {
     ingredients: IIngredient[],
 	title?: string,
 	type?: string,
 }
 
-export interface constructorListProps {
+export interface IConstructorListProps {
 	bun: IIngredient | null;
 	ingredients: IIngredient[];
-	onDropHandler: (item: ingredientItemProps) => void;
+	onDropHandler: (item: IIngredientItemProps) => void;
 }
 
-export interface constructorItemProps {
+export interface IConstructorItemProps {
 	ingredient: IIngredient,
 	moveIngredient: (id: string, atIndex: number) => void,
 	findIngredient: (id: string) => {
@@ -71,15 +71,15 @@ export interface constructorItemProps {
 	},
 }
 
-interface constructorItemSkeletonAndBunProps {
+interface IConstructorItemSkeletonAndBunProps {
 	position?: 'top' | 'bottom',
 	extraClass?: string,
 };
 
-export interface constructorItemSkeletonProps extends constructorItemSkeletonAndBunProps {
+export interface constructorItemSkeletonProps extends IConstructorItemSkeletonAndBunProps {
 	text: string;
 }
 
-export interface constructorItemBunProps extends constructorItemSkeletonAndBunProps {
+export interface constructorItemBunProps extends IConstructorItemSkeletonAndBunProps {
 	ingredient: IIngredient;
 }

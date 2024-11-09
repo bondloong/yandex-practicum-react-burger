@@ -1,9 +1,9 @@
 import styles from './ingredient-list.module.css';
-import { ingredientListProps } from '../../../utils/prop-types';
+import { IIngredientListProps } from '../../../utils/prop-types';
 import IngredientItem from './ingredient-item/ingredient-item';
 import { forwardRef } from 'react';
 
-const IngredientList = forwardRef<HTMLHeadingElement, ingredientListProps>(function IngredientGroup({ ingredients, title, type }: ingredientListProps, ref) {
+const IngredientList = forwardRef<HTMLHeadingElement, IIngredientListProps>(function IngredientGroup({ ingredients, title, type }: IIngredientListProps, ref) {
 	return (
 		<section>
 			<h2 className='text text_type_main-medium' ref={ref as any}>{title}</h2>

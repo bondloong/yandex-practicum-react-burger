@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from '../../services/slices';
 import { useMemo } from 'react';
 import { sendOrder } from '../../services/slices/order-details-slice';
 import { addIngredient } from '../../services/slices/burger-сonstructor-slice';
-import { ingredientItemProps } from '../../utils/prop-types';
+import { IIngredientItemProps } from '../../utils/prop-types';
 
 const BurgerConstructor = () => {
 	const { isShowModal, openModal, closeModal } = useShowModal(false);
@@ -30,7 +30,7 @@ const BurgerConstructor = () => {
 		}
 	};
 
-	const handleIngredientDrop = (item: ingredientItemProps): void => {
+	const handleIngredientDrop = (item: IIngredientItemProps): void => {
 		dispatch(addIngredient(item.ingredient));
 	};
 

@@ -5,12 +5,12 @@ import { GridLoader } from 'react-spinners';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './modal.module.css';
 import { useAppSelector } from '../../services/slices';
-import { modalProps } from '../../utils/prop-types';
+import { IModalProps } from '../../utils/prop-types';
 import ModalOverlay from './modal-overlay/modal-overlay';
 
 const modalRoot = document.getElementById('modals');
 
-const Modal = ({ text, closeModal, children }: modalProps) => {
+const Modal = ({ text, closeModal, children }: IModalProps) => {
 	const { isLoading } = useAppSelector((store) => store.orderDetails);
 
 	useEffect(() => {

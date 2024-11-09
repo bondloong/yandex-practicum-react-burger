@@ -6,12 +6,12 @@ import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-c
 import styles from './ingredient-item.module.css';
 import { useAppDispatch, useAppSelector } from '../../../../services/slices';
 import Modal from '../../../modal/modal';
-import { ingredientItemProps } from '../../../../utils/prop-types';
+import { IIngredientItemProps } from '../../../../utils/prop-types';
 import IngredientDetails from '../../../ingredient-details/ingredient-details';
 import { setData } from '../../../../services/slices/ingredient-details-slice';
 import useShowModal from '../../../../hooks/use-show-modal';
 
-const IngredientItem = ({ ingredient }: ingredientItemProps) => {
+const IngredientItem = ({ ingredient }: IIngredientItemProps) => {
 	const { bun, ingredients } = useAppSelector((store) => store.burgerConstructor);
 
 	const counter = useMemo(() => {

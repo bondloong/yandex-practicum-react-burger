@@ -1,8 +1,8 @@
 import styles from './modal-overlay.module.css';
-import { modalOverlayProps } from '../../../utils/prop-types';
+import { IModalOverlayProps } from '../../../utils/prop-types';
 import React from 'react';
 
-const ModalOverlay: React.FC<modalOverlayProps> = ({ onClick }) => {
+const ModalOverlay: React.FC<IModalOverlayProps> = ({ onClick }) => {
 	const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
 		if (onClick) {
 			onClick();

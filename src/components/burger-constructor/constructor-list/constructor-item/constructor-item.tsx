@@ -5,10 +5,10 @@ import {
 
 import { IIngredient } from '../../../../utils/prop-types';
 import styles from './constructor-item.module.css';
-import { memo } from 'react';// Предполагается, что хуки находятся в hooks.ts
-import { useDrag, useDrop, DropTargetMonitor } from 'react-dnd';
+import { memo } from 'react';
+import { useDrag, useDrop } from 'react-dnd';
 import { useAppDispatch } from '../../../../services/slices';
-import { removeIngredient, sortIngredients } from '../../../../services/slices/burger-сonstructor-slice';
+import { removeIngredient } from '../../../../services/slices/burger-сonstructor-slice';
 
 interface IIngredientWithId extends IIngredient {
 	id: string;
@@ -30,7 +30,7 @@ const ConstructorItem = memo(function ConstructorItem({ ingredient, moveIngredie
 
 	const originalIndex = findIngredient(ingredient.id).index;
 
-	const [{ isDragging }, drag] = useDrag<DragItem, void, { isDragging: boolean }>(
+	const [{ isDragging }, dragRef] = useDrag<DragItem, void, { isDragging: boolean }>(
 		() => ({
 			type: 'constructorIngredient',
 			item: { id: ingredient.id, originalIndex },
@@ -48,38 +48,36 @@ const ConstructorItem = memo(function ConstructorItem({ ingredient, moveIngredie
 		[originalIndex, moveIngredient]
 	);
 
-	const [, drop] = useDrop<DragItem>(
-		{
-			accept: 'constructorIngredient',
-			hover: (item: DragItem, monitor: DropTargetMonitor) => {
-				if (item.id !== ingredient.id) {
-					const { index: overIndex } = findIngredient(ingredient.id);
-					moveIngredient(item.id, overIndex);
-					item.originalIndex = overIndex; 
-				}
-			},
-			drop: (item: DragItem) => {
-				dispatch(sortIngredients({ fromIndex: item.originalIndex, toIndex: findIngredient(item.id).index }));
-			},
+	const [, dropRef] = useDrop<DragItem, void>({
+		accept: 'constructorIngredient',
+		hover(item: DragItem) {
+			if (item.id !== ingredient.id) {
+				const { index: overIndex } = findIngredient(ingredient.id);
+				moveIngredient(item.id, overIndex);
+			}
 		},
-		[findIngredient, moveIngredient]
-	);
+	});
+
+	const combinedRef = (node: HTMLLIElement | null) => {
+		dragRef(node);
+		dropRef(node);
+	};
 
 	const opacity = isDragging ? 0 : 1;
 
-	const handleDeleteIngredient = (ingredient: IIngredientWithId) => {
-		dispatch(removeIngredient(ingredient));
+	const handleDeleteIngredient = () => {
+		dispatch(removeIngredient({ id: ingredient.id }));
 	};
 
 	return (
-		<li className={styles.item} style={{ opacity }} ref={(node) => drag(drop(node))}>
+		<li className={styles.item} style={{ opacity }} ref={combinedRef}>
 			<DragIcon type='primary' />
 			<ConstructorElement
 				text={ingredient.name}
 				price={ingredient.price ?? 0}
 				thumbnail={ingredient.image_mobile ?? ''}
 				extraClass={styles.element}
-				handleClose={() => handleDeleteIngredient(ingredient)}
+				handleClose={handleDeleteIngredient}
 			/>
 		</li>
 	);

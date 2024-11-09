@@ -1,47 +1,40 @@
 import styles from './constructor-list.module.css';
 import ConstructorItem from './constructor-item/constructor-item';
-import update from 'immutability-helper';
-
-import { IConstructorListProps, IIngredientItemProps } from '../../../utils/prop-types';
-import { memo, useCallback, useEffect, useState } from 'react';
-import { useAppSelector } from '../../../services/slices';
+import { IConstructorListProps, IIngredient, IIngredientItemProps } from '../../../utils/prop-types';
+import { memo, useCallback } from 'react';
 import { useDrop } from 'react-dnd';
 import ConstructorItemBun from './constructor-item/constructor-item-bun/constructor-item-bun';
 import ConstructorItemSkeleton from './constructor-item/constructor-item-skeleton/constructor-item-skeleton';
+import { useAppDispatch, useAppSelector } from '../../../services/slices';
+import { sortIngredients } from '../../../services/slices/burger-сonstructor-slice';
 
 const ConstructorList = memo(function ConstructorList({ onDropHandler }: IConstructorListProps) {
   const { bun, ingredients } = useAppSelector((store) => store.burgerConstructor);
-
-  const [constructorIngredients, setConstructorIngredients] = useState(ingredients);
-
-  useEffect(() => {
-    setConstructorIngredients(ingredients);
-  }, [ingredients]);
+  const dispatch = useAppDispatch();
 
   const findIngredient = useCallback(
     (id: string) => {
-      const ingredient = constructorIngredients.filter((ingredient) => ingredient.id === id)[0];
+      const ingredient = ingredients.find((ingredient) => ingredient.id === id);
+      if (!ingredient) {
+        throw new Error(`Ingredient with id ${id} not found`);
+      }
       return {
-        ingredient,
-        index: constructorIngredients.indexOf(ingredient),
+        ingredient: ingredient as IIngredient,
+        index: ingredients.indexOf(ingredient),
       };
     },
-    [constructorIngredients]
+    [ingredients]
   );
 
+
   const moveIngredient = useCallback(
-    (id: string, atIndex: number) => {
-      const { ingredient, index } = findIngredient(id);
-      setConstructorIngredients(
-        update(constructorIngredients, {
-          $splice: [
-            [index, 1],
-            [atIndex, 0, ingredient],
-          ],
-        })
-      );
+    (id: string, toIndex: number) => {
+      const { index } = findIngredient(id);
+      if (index !== -1 && toIndex !== -1) {
+        dispatch(sortIngredients({ fromIndex: index, toIndex }));
+      }
     },
-    [findIngredient, constructorIngredients]
+    [dispatch, findIngredient]
   );
 
   const [, dropTarget] = useDrop({
@@ -51,7 +44,7 @@ const ConstructorList = memo(function ConstructorList({ onDropHandler }: IConstr
     },
   });
 
-  const addBun = (position: "top" | "bottom" | undefined) =>
+  const addBun = (position: 'top' | 'bottom') =>
     bun ? (
       <ConstructorItemBun ingredient={bun} position={position} extraClass={styles.fix_item} />
     ) : (
@@ -63,9 +56,14 @@ const ConstructorList = memo(function ConstructorList({ onDropHandler }: IConstr
       {addBun('top')}
 
       <ul className={`${styles.list}`}>
-        {constructorIngredients.length ? (
-          constructorIngredients.map((ingredient) => (
-            <ConstructorItem key={ingredient.id} ingredient={ingredient} moveIngredient={moveIngredient} findIngredient={findIngredient} />
+        {ingredients.length ? (
+          ingredients.map((ingredient) => (
+            <ConstructorItem
+              key={ingredient.id}
+              ingredient={ingredient}
+              moveIngredient={moveIngredient}
+              findIngredient={findIngredient}
+            />
           ))
         ) : (
           <ConstructorItemSkeleton text='Выберите начинку и соусы' />
@@ -78,4 +76,3 @@ const ConstructorList = memo(function ConstructorList({ onDropHandler }: IConstr
 });
 
 export default ConstructorList;
- 

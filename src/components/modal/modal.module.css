@@ -1,21 +1,21 @@
 .modal {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  min-width: 720px;
-  background-color: var(--background);
-  border-radius: 40px;
-  transform: translate(-50%, -50%);
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	min-width: 720px;
+	background-color: var(--background);
+	border-radius: 40px;
+	transform: translate(-50%, -50%);
 }
 
 .header {
-  /* stylelint-disable-next-line declaration-property-unit-allowed-list */
-  line-height: 64px;
+	/* stylelint-disable-next-line declaration-property-unit-allowed-list */
+	line-height: 64px;
 }
 
 .close {
-  position: absolute;
-  top: 60px;
-  right: 40px;
-  cursor: pointer;
+	position: absolute;
+	top: 60px;
+	right: 40px;
+	cursor: pointer;
 }

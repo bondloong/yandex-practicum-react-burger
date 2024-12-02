@@ -37,10 +37,24 @@ const Modal = ({ text, closeModal, children }: IModalProps) => {
 		<>
 			<ModalOverlay onClick={isLoading ? null : handleClickCloseModal} />
 			{isLoading ? (
-				<GridLoader color='#fff' loading={isLoading} cssOverride={{ position: 'absolute', top: '50%', left: '50%', transform: "translate('-50%', '-50%')" }} />
+				<GridLoader
+					color='#fff'
+					loading={isLoading}
+					cssOverride={{
+						position: 'absolute',
+						top: '50%',
+						left: '50%',
+						transform: "translate('-50%', '-50%')",
+					}}
+				/>
 			) : (
 				<div className={styles.modal}>
-					{text && <h2 className={`${styles.header} mt-10 ml-10 mr-10 text text_type_main-large`}>{text}</h2>}
+					{text && (
+						<h2
+							className={`${styles.header} mt-10 ml-10 mr-10 text text_type_main-large`}>
+							{text}
+						</h2>
+					)}
 					<span className={styles.close} onClick={handleClickCloseModal}>
 						<CloseIcon type='primary' />
 					</span>

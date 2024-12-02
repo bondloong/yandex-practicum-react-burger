@@ -22,15 +22,26 @@ interface DragItem {
 interface ConstructorItemProps {
 	ingredient: IIngredientWithId;
 	moveIngredient: (id: string, toIndex: number) => void;
-	findIngredient: (id: string) => { ingredient: IIngredientWithId; index: number };
+	findIngredient: (id: string) => {
+		ingredient: IIngredientWithId;
+		index: number;
+	};
 }
 
-const ConstructorItem = memo(function ConstructorItem({ ingredient, moveIngredient, findIngredient }: ConstructorItemProps) {
+const ConstructorItem = memo(function ConstructorItem({
+	ingredient,
+	moveIngredient,
+	findIngredient,
+}: ConstructorItemProps) {
 	const dispatch = useAppDispatch();
 
 	const originalIndex = findIngredient(ingredient.id).index;
 
-	const [{ isDragging }, dragRef] = useDrag<DragItem, void, { isDragging: boolean }>(
+	const [{ isDragging }, dragRef] = useDrag<
+		DragItem,
+		void,
+		{ isDragging: boolean }
+	>(
 		() => ({
 			type: 'constructorIngredient',
 			item: { id: ingredient.id, originalIndex },

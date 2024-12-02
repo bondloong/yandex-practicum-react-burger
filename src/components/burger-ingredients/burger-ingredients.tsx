@@ -10,7 +10,9 @@ import { useAppDispatch, useAppSelector } from '../../services/slices';
 type TabType = 'bun' | 'sauce' | 'main';
 
 const BurgerIngredients: React.FC = () => {
-	const { isLoading, isError, data } = useAppSelector((state) => state.burgerIngredients);
+	const { isLoading, isError, data } = useAppSelector(
+		(state) => state.burgerIngredients
+	);
 	const dispatch = useAppDispatch();
 
 	const tabsRef = useRef<HTMLDivElement | null>(null);
@@ -45,7 +47,9 @@ const BurgerIngredients: React.FC = () => {
 			(elem) =>
 				elem ===
 				arr.reduce((prev, curr) =>
-					Math.abs(curr - tabsTopCoord) < Math.abs(prev - tabsTopCoord) ? curr : prev
+					Math.abs(curr - tabsTopCoord) < Math.abs(prev - tabsTopCoord)
+						? curr
+						: prev
 				)
 		);
 
@@ -85,30 +89,45 @@ const BurgerIngredients: React.FC = () => {
 		}
 	};
 
-
 	return (
 		<>
 			<GridLoader
 				color='#fff'
 				loading={isLoading}
-				cssOverride={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}
+				cssOverride={{
+					position: 'absolute',
+					top: '50%',
+					left: '50%',
+					transform: 'translate(-50%, -50%)',
+				}}
 			/>
 			{isError && <>Ошибка при загрузке ингредиентов</>}
 			{data && (
 				<article className='pt-10 pb-10'>
 					<h1 className='text text_type_main-large mb-5'>Соберите бургер</h1>
 					<div ref={tabsRef} className={`${styles.tabs} mb-10`}>
-						<Tab value='bun' active={activeTab === 'bun'} onClick={handleClickTab}>
+						<Tab
+							value='bun'
+							active={activeTab === 'bun'}
+							onClick={handleClickTab}>
 							Булки
 						</Tab>
-						<Tab value='sauce' active={activeTab === 'sauce'} onClick={handleClickTab}>
+						<Tab
+							value='sauce'
+							active={activeTab === 'sauce'}
+							onClick={handleClickTab}>
 							Соусы
 						</Tab>
-						<Tab value='main' active={activeTab === 'main'} onClick={handleClickTab}>
+						<Tab
+							value='main'
+							active={activeTab === 'main'}
+							onClick={handleClickTab}>
 							Начинки
 						</Tab>
 					</div>
-					<div className={`${styles.groups}`} onScroll={handleScrollIngredientGroup}>
+					<div
+						className={`${styles.groups}`}
+						onScroll={handleScrollIngredientGroup}>
 						<IngredientList
 							ingredients={data}
 							title='Булки'

@@ -1,4 +1,7 @@
-import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import {
+	CurrencyIcon,
+	Button,
+} from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-constructor.module.css';
 import ConstructorList from './constructor-list/constructor-list';
 import Modal from '../modal/modal';
@@ -12,19 +15,30 @@ import { IIngredientItemProps } from '../../utils/prop-types';
 
 const BurgerConstructor = () => {
 	const { isShowModal, openModal, closeModal } = useShowModal(false);
-	const { bun, ingredients } = useAppSelector((store) => store.burgerConstructor);
+	const { bun, ingredients } = useAppSelector(
+		(store) => store.burgerConstructor
+	);
 	const { isLoading } = useAppSelector((store) => store.burgerIngredients);
 
 	const dispatch = useAppDispatch();
 
 	const totalPrice = useMemo(() => {
 		const bunPrice = bun && bun.price ? bun.price * 2 : 0;
-		return bunPrice + ingredients.reduce((acc, ingredient) => acc + (ingredient.price ?? 0), 0);
+		return (
+			bunPrice +
+			ingredients.reduce((acc, ingredient) => acc + (ingredient.price ?? 0), 0)
+		);
 	}, [bun, ingredients]);
 
 	const handleSubmitOrder = () => {
 		if (bun && ingredients.length) {
-			const preparedData = { ingredients: [bun._id, ...ingredients.map((ingredient) => ingredient._id), bun._id] };
+			const preparedData = {
+				ingredients: [
+					bun._id,
+					...ingredients.map((ingredient) => ingredient._id),
+					bun._id,
+				],
+			};
 			dispatch(sendOrder(preparedData));
 			openModal();
 		}
@@ -51,8 +65,7 @@ const BurgerConstructor = () => {
 						htmlType='button'
 						type='primary'
 						size='large'
-						onClick={handleSubmitOrder}
-					>
+						onClick={handleSubmitOrder}>
 						Оформить заказ
 					</Button>
 				</div>

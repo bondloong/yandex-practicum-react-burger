@@ -1,4 +1,5 @@
 export interface IIngredient {
+	id: string,
 	_id: string,
 	name: string,
 	type: string,
@@ -13,37 +14,72 @@ export interface IIngredient {
 	__v?: number, 
 }
 
-
 export interface IIngredientsData {
 	isLoading: boolean,
 	isError: boolean,
 	data: IIngredient[] | null
-
+	success?: boolean;
 }
 
-export interface modalProps {
+export interface IOrderResponse {
+	success: boolean;
+	name: string;
+	order: {
+		number: number;
+	};
+}
+
+export interface IOrderData {
+	isLoading: boolean;
+	isError: boolean;
+	data: IOrderResponse | null;
+}
+
+export interface IModalProps {
 	text?: string,
 	closeModal: () => void,
 	children: React.ReactNode
 }
 
-export interface modalOverlayProps {
-	onClick: () => void
+export interface IModalOverlayProps {
+	onClick: (() => void) | null
 }
 
-export interface ingredientItemProps {
+export interface IIngredientItemProps {
 	ingredient: IIngredient,
 	counter?: number;
 }
 
-export interface ingredientListProps {
+export interface IIngredientListProps {
     ingredients: IIngredient[],
-	name?: string,
+	title?: string,
 	type?: string,
 }
 
-export interface constructorItemProps {
+export interface IConstructorListProps {
+	bun: IIngredient | null;
+	ingredients: IIngredient[];
+	onDropHandler: (item: IIngredientItemProps) => void;
+}
+
+export interface IConstructorItemProps {
 	ingredient: IIngredient,
-	type?: "top" | "bottom";
+	moveIngredient: (id: string, atIndex: number) => void,
+	findIngredient: (id: string) => {
+		ingredient: IIngredient;
+		index: number;
+	},
+}
+
+interface IConstructorItemSkeletonAndBunProps {
+	position?: 'top' | 'bottom',
 	extraClass?: string,
+};
+
+export interface constructorItemSkeletonProps extends IConstructorItemSkeletonAndBunProps {
+	text: string;
+}
+
+export interface constructorItemBunProps extends IConstructorItemSkeletonAndBunProps {
+	ingredient: IIngredient;
 }

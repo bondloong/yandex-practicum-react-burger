@@ -1,11 +1,10 @@
 .order {
 	display: flex;
 	flex-direction: column;
-  align-items: center;
-  margin: 120px 60px;
-  
+	align-items: center;
+	margin: 120px 60px;
 }
 
 .order_number {
-  text-shadow: 0 4px 32px rgb(51 51 255 / 50%), 0 0 8px rgb(51 51 255 / 25%);
+	text-shadow: 0 4px 32px rgb(51 51 255 / 50%), 0 0 8px rgb(51 51 255 / 25%);
 }

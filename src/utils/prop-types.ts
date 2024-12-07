@@ -1,23 +1,10 @@
-export interface IIngredient {
-	id: string,
-	_id: string,
-	name: string,
-	type: string,
-	proteins?: number,
-	fat?: number,
-	carbohydrates?: number,
-	calories?: number,
-	price?: number,
-	image?: string,
-	image_mobile?: string,
-	image_large?: string,
-	__v?: number, 
-}
+import { ReactNode } from 'react';
+import { Ingredient } from '../types';
 
 export interface IIngredientsData {
-	isLoading: boolean,
-	isError: boolean,
-	data: IIngredient[] | null
+	isLoading: boolean;
+	isError: boolean;
+	data: Ingredient[] | null;
 	success?: boolean;
 }
 
@@ -36,50 +23,57 @@ export interface IOrderData {
 }
 
 export interface IModalProps {
-	text?: string,
-	closeModal: () => void,
-	children: React.ReactNode
+	text?: string;
+	onClose: () => void;
+	children: ReactNode;
 }
 
 export interface IModalOverlayProps {
-	onClick: (() => void) | null
+	onClick: (() => void) | null;
 }
 
 export interface IIngredientItemProps {
-	ingredient: IIngredient,
+	ingredient: Ingredient;
 	counter?: number;
 }
 
 export interface IIngredientListProps {
-    ingredients: IIngredient[],
-	title?: string,
-	type?: string,
+	ingredients: Ingredient[];
+	title?: string;
+	type?: string;
 }
 
 export interface IConstructorListProps {
-	bun: IIngredient | null;
-	ingredients: IIngredient[];
+	bun: Ingredient | null;
+	ingredients: Ingredient[];
 	onDropHandler: (item: IIngredientItemProps) => void;
 }
 
 export interface IConstructorItemProps {
-	ingredient: IIngredient,
-	moveIngredient: (id: string, atIndex: number) => void,
+	ingredient: Ingredient;
+	moveIngredient: (id: string, atIndex: number) => void;
 	findIngredient: (id: string) => {
-		ingredient: IIngredient;
+		ingredient: Ingredient;
 		index: number;
-	},
+	};
 }
 
 interface IConstructorItemSkeletonAndBunProps {
-	position?: 'top' | 'bottom',
-	extraClass?: string,
-};
+	position?: 'top' | 'bottom';
+	extraClass?: string;
+}
 
-export interface constructorItemSkeletonProps extends IConstructorItemSkeletonAndBunProps {
+export interface constructorItemSkeletonProps
+	extends IConstructorItemSkeletonAndBunProps {
 	text: string;
 }
 
-export interface constructorItemBunProps extends IConstructorItemSkeletonAndBunProps {
-	ingredient: IIngredient;
+export interface constructorItemBunProps
+	extends IConstructorItemSkeletonAndBunProps {
+	ingredient: Ingredient;
+}
+
+export interface protectedRouteElementProps {
+	component: ReactNode;
+	onlyAuth: boolean;
 }

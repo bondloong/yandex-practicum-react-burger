@@ -1,23 +1,10 @@
-export interface IIngredient {
-	id: string;
-	_id: string;
-	name: string;
-	type: string;
-	proteins?: number;
-	fat?: number;
-	carbohydrates?: number;
-	calories?: number;
-	price?: number;
-	image?: string;
-	image_mobile?: string;
-	image_large?: string;
-	__v?: number;
-}
+import { ReactNode } from 'react';
+import { Ingredient } from '../types';
 
 export interface IIngredientsData {
 	isLoading: boolean;
 	isError: boolean;
-	data: IIngredient[] | null;
+	data: Ingredient[] | null;
 	success?: boolean;
 }
 
@@ -37,8 +24,8 @@ export interface IOrderData {
 
 export interface IModalProps {
 	text?: string;
-	closeModal: () => void;
-	children: React.ReactNode;
+	onClose: () => void;
+	children: ReactNode;
 }
 
 export interface IModalOverlayProps {
@@ -46,27 +33,27 @@ export interface IModalOverlayProps {
 }
 
 export interface IIngredientItemProps {
-	ingredient: IIngredient;
+	ingredient: Ingredient;
 	counter?: number;
 }
 
 export interface IIngredientListProps {
-	ingredients: IIngredient[];
+	ingredients: Ingredient[];
 	title?: string;
 	type?: string;
 }
 
 export interface IConstructorListProps {
-	bun: IIngredient | null;
-	ingredients: IIngredient[];
+	bun: Ingredient | null;
+	ingredients: Ingredient[];
 	onDropHandler: (item: IIngredientItemProps) => void;
 }
 
 export interface IConstructorItemProps {
-	ingredient: IIngredient;
+	ingredient: Ingredient;
 	moveIngredient: (id: string, atIndex: number) => void;
 	findIngredient: (id: string) => {
-		ingredient: IIngredient;
+		ingredient: Ingredient;
 		index: number;
 	};
 }
@@ -83,5 +70,10 @@ export interface constructorItemSkeletonProps
 
 export interface constructorItemBunProps
 	extends IConstructorItemSkeletonAndBunProps {
-	ingredient: IIngredient;
+	ingredient: Ingredient;
+}
+
+export interface protectedRouteElementProps {
+	component: ReactNode;
+	onlyAuth: boolean;
 }

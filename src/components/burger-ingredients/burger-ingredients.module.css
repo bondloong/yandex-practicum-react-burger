@@ -2,22 +2,33 @@
 	display: flex;
 }
 
-.groups {
+.group {
 	height: calc(100vh - 324px);
 	overflow-y: auto;
 	scrollbar-width: thin;
 	scrollbar-color: var(--text-inactive-color) var(--background-element);
 }
 
-.groups::-webkit-scrollbar {
+.group::-webkit-scrollbar {
 	width: 8px;
 }
 
-.groups::-webkit-scrollbar-track {
+.group::-webkit-scrollbar-track {
 	margin-bottom: 156px;
 	background: var(--background-element);
 }
 
-.groups::-webkit-scrollbar-thumb {
+.group::-webkit-scrollbar-thumb {
 	background-color: var(--text-inactive-color);
+}
+
+.list {
+	display: grid;
+	grid-template-columns: 272px 272px;
+	grid-auto-rows: 208px;
+	row-gap: 32px;
+}
+
+.link {
+	text-decoration: none;
 }

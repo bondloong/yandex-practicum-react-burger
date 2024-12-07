@@ -4,6 +4,7 @@ import { clearOrder } from '../../services/slices/order-details-slice';
 import done from '../../images/done.gif';
 import styles from './order-details.module.css';
 import { useAppDispatch, useAppSelector } from '../../services/slices';
+import { Navigate } from 'react-router-dom';
 
 const OrderDetails: React.FC = () => {
 	const { isError, data } = useAppSelector((state) => state.orderDetails);
@@ -18,8 +19,8 @@ const OrderDetails: React.FC = () => {
 
 	return (
 		<div className={styles.order}>
-			{isError && <>Ошибка при отправке заказа</>}
-			{data && (
+			{isError && <>Ошибка при отпраке заказа</>}
+			{data ? (
 				<>
 					<span
 						className={`${styles.order_number} text text_type_digits-large`}>
@@ -36,6 +37,8 @@ const OrderDetails: React.FC = () => {
 						Дождитесь готовности на орбитальной станции
 					</span>
 				</>
+			) : (
+				<Navigate to='/' replace={true} />
 			)}
 		</div>
 	);

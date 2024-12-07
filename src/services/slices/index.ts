@@ -1,31 +1,30 @@
 // store.ts
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import burgerIngredientsSlice from './burger-ingredients-slice';
 import burgerConstructorSlice from './burger-сonstructor-slice';
 import ingredientDetailsSlice from './ingredient-details-slice';
 import orderDetailsSlice from './order-details-slice';
-import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import userSlice from './user-slice';
 
-// Комбинируем редьюсеры из слайсов
 const rootReducer = combineReducers({
 	burgerIngredients: burgerIngredientsSlice.reducer,
 	burgerConstructor: burgerConstructorSlice.reducer,
 	ingredientDetails: ingredientDetailsSlice.reducer,
 	orderDetails: orderDetailsSlice.reducer,
+	user: userSlice.reducer,
 });
 
-// Определяем тип состояния корневого редьюсера
 export type RootState = ReturnType<typeof rootReducer>;
 
-// Типизируем preloadedState
 const preloadedState: RootState = {
 	burgerIngredients: { data: null, isLoading: false, isError: false },
 	burgerConstructor: { bun: null, ingredients: [] },
 	ingredientDetails: { data: null },
 	orderDetails: { data: null, isLoading: false, isError: false },
+	user: { user: null, isAuthChecked: false },
 };
 
-// Создаем store
 const store = configureStore({
 	reducer: rootReducer,
 	middleware: (getDefaultMiddleware) => getDefaultMiddleware(),

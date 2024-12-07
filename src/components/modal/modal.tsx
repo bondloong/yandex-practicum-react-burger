@@ -7,11 +7,13 @@ import styles from './modal.module.css';
 import { useAppSelector } from '../../services/slices';
 import { IModalProps } from '../../utils/prop-types';
 import ModalOverlay from './modal-overlay/modal-overlay';
+import useShowModal from '../../hooks/use-show-modal';
 
 const modalRoot = document.getElementById('modals');
 
-const Modal = ({ text, closeModal, children }: IModalProps) => {
+const Modal = ({ children, onClose }: IModalProps) => {
 	const { isLoading } = useAppSelector((store) => store.orderDetails);
+	const { isShowModal, closeModal } = useShowModal(true);
 
 	useEffect(() => {
 		document.addEventListener('keydown', handleKeyEscCloseModal);
@@ -19,49 +21,52 @@ const Modal = ({ text, closeModal, children }: IModalProps) => {
 		return () => {
 			document.removeEventListener('keydown', handleKeyEscCloseModal);
 		};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	const handleClickCloseModal = () => {
+	const handleCloseModal = () => {
 		closeModal();
+		if (onClose) onClose();
 	};
 
 	const handleKeyEscCloseModal = (e: KeyboardEvent) => {
 		if (e.code === 'Escape') {
-			closeModal();
+			handleCloseModal();
 		}
 	};
 
 	if (!modalRoot) return null;
 
 	return createPortal(
-		<>
-			<ModalOverlay onClick={isLoading ? null : handleClickCloseModal} />
-			{isLoading ? (
-				<GridLoader
-					color='#fff'
-					loading={isLoading}
-					cssOverride={{
-						position: 'absolute',
-						top: '50%',
-						left: '50%',
-						transform: "translate('-50%', '-50%')",
-					}}
-				/>
-			) : (
-				<div className={styles.modal}>
-					{text && (
-						<h2
-							className={`${styles.header} mt-10 ml-10 mr-10 text text_type_main-large`}>
-							{text}
-						</h2>
-					)}
-					<span className={styles.close} onClick={handleClickCloseModal}>
-						<CloseIcon type='primary' />
-					</span>
-					{children}
-				</div>
-			)}
-		</>,
+		isShowModal && (
+			<>
+				{isLoading ? (
+					<>
+						<ModalOverlay onClick={null} />
+						<GridLoader
+							color='#fff'
+							loading={isLoading}
+							cssOverride={{
+								position: 'absolute',
+								top: '50%',
+								left: '50%',
+								transform: "translate('-50%', '-50%')",
+							}}
+						/>
+					</>
+				) : (
+					<>
+						<ModalOverlay onClick={handleCloseModal} />
+						<div className={styles.modal}>
+							<button className={styles.close} onClick={handleCloseModal}>
+								<CloseIcon type='primary' />
+							</button>
+							{children}
+						</div>
+					</>
+				)}
+			</>
+		),
 		modalRoot
 	);
 };

@@ -1,20 +1,27 @@
+import { FC } from 'react';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './constructor-item-bun.module.css';
-import { constructorItemBunProps } from '../../../../../utils/prop-types';
+import { ConstructorItemType, Ingredient } from '../../../../../types';
 
-const ConstructorItemBun = ({
+interface ConstructorItemBunProps {
+	ingredient: Ingredient;
+	type: ConstructorItemType;
+	extraClass?: string;
+}
+
+const ConstructorItemBun: FC<ConstructorItemBunProps> = ({
 	ingredient,
-	position,
+	type,
 	extraClass = '',
-}: constructorItemBunProps) => {
+}) => {
 	return (
 		<div className={`${styles.item} ${extraClass}`}>
 			<ConstructorElement
-				text={`${ingredient.name}${position === 'top' ? ' (верх)' : ' (низ)'}`}
-				price={ingredient.price ? ingredient.price : 0}
-				thumbnail={ingredient.image_mobile ? ingredient.image_mobile : ''}
-				type={position}
+				text={`${ingredient.name}${type === 'top' ? ' (верх)' : ' (низ)'}`}
+				price={ingredient.price}
+				thumbnail={ingredient.image_mobile}
+				type={type}
 				isLocked={true}
 				extraClass={styles.element}
 			/>

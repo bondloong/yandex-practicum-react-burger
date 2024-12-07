@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { postOrder } from '../../utils/api';
-import { IOrderData, IOrderResponse } from '../../utils/prop-types';
+import { requestSendOrder } from '../../utils/api';
+import { IOrderData } from '../../utils/prop-types';
 
 const initialState: IOrderData = {
 	data: null,
@@ -8,10 +8,10 @@ const initialState: IOrderData = {
 	isError: false,
 };
 
-export const sendOrder = createAsyncThunk<
-	IOrderResponse,
-	{ ingredients: string[] }
->('orderDetails/sendOrder', postOrder);
+export const sendOrder = createAsyncThunk(
+	'orderDetails/sendOrder',
+	requestSendOrder
+);
 
 const orderDetailsSlice = createSlice({
 	name: 'orderDetails',

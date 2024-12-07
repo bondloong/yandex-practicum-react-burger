@@ -1,91 +1,81 @@
-import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import styles from './burger-ingredients.module.css';
-
-import IngredientList from './ingredient-list/ingredient-list';
+/* eslint-disable eslint-comments/disable-enable-pair */
+/* eslint-disable quotes */
 import { useEffect, useRef, useState } from 'react';
-import { getIngredients } from '../../services/slices/burger-ingredients-slice';
+import { Link, useLocation } from 'react-router-dom';
 import { GridLoader } from 'react-spinners';
+import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
+
+import { getIngredients } from '../../services/slices/burger-ingredients-slice';
+import styles from './burger-ingredients.module.css';
+import { IngredientType } from '../../types';
+import IngredientItem from './ingredient-list/ingredient-item/ingredient-item';
 import { useAppDispatch, useAppSelector } from '../../services/slices';
 
-type TabType = 'bun' | 'sauce' | 'main';
-
-const BurgerIngredients: React.FC = () => {
+const BurgerIngredients = () => {
 	const { isLoading, isError, data } = useAppSelector(
-		(state) => state.burgerIngredients
+		(store) => store.burgerIngredients
 	);
 	const dispatch = useAppDispatch();
-
-	const tabsRef = useRef<HTMLDivElement | null>(null);
-	const groupBunRef = useRef<HTMLDivElement | null>(null);
-	const groupSauceRef = useRef<HTMLDivElement | null>(null);
-	const groupMainRef = useRef<HTMLDivElement | null>(null);
-
-	const [activeTab, setActiveTab] = useState<TabType>('bun');
+	const tabsRef = useRef<HTMLDivElement>(null);
+	const groupBunRef = useRef<HTMLHeadingElement>(null);
+	const groupSauceRef = useRef<HTMLHeadingElement>(null);
+	const groupMainRef = useRef<HTMLHeadingElement>(null);
+	const [activeTab, setActiveTab] = useState<IngredientType>('bun');
+	const location = useLocation();
 
 	useEffect(() => {
 		dispatch(getIngredients());
-	}, [dispatch]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
-	const handleScrollIngredientGroup = (): void => {
-		if (
-			!tabsRef.current ||
-			!groupBunRef.current ||
-			!groupSauceRef.current ||
-			!groupMainRef.current
-		) {
-			return;
-		}
-
-		const tabsTopCoord = tabsRef.current.getBoundingClientRect().top;
-		const bunTopCoord = groupBunRef.current.getBoundingClientRect().top;
-		const sauceTopCoord = groupSauceRef.current.getBoundingClientRect().top;
-		const mainTopCoord = groupMainRef.current.getBoundingClientRect().top;
-
-		const arr = [bunTopCoord, sauceTopCoord, mainTopCoord];
-
-		const closestIndex = arr.findIndex(
-			(elem) =>
-				elem ===
-				arr.reduce((prev, curr) =>
-					Math.abs(curr - tabsTopCoord) < Math.abs(prev - tabsTopCoord)
-						? curr
-						: prev
-				)
-		);
-
-		switch (closestIndex) {
-			case 0:
-				if (activeTab !== 'bun') setActiveTab('bun');
-				break;
-			case 1:
-				if (activeTab !== 'sauce') setActiveTab('sauce');
-				break;
-			case 2:
-				if (activeTab !== 'main') setActiveTab('main');
-				break;
-			default:
-				setActiveTab('bun');
-				break;
+	const handleScrollIngredientGroup = () => {
+		const tabsTopCoord = tabsRef.current?.getBoundingClientRect().top;
+		const bunTopCoord = groupBunRef.current?.getBoundingClientRect().top;
+		const sauceTopCoord = groupSauceRef.current?.getBoundingClientRect().top;
+		const mainTopCoord = groupMainRef.current?.getBoundingClientRect().top;
+		if (tabsTopCoord && bunTopCoord && sauceTopCoord && mainTopCoord) {
+			const arr: number[] = [bunTopCoord, sauceTopCoord, mainTopCoord];
+			const closestIndex = arr.findIndex(
+				(elem: number) =>
+					elem ===
+					arr.reduce((prev: number, curr: number) =>
+						Math.abs(curr - tabsTopCoord) < Math.abs(prev - tabsTopCoord)
+							? curr
+							: prev
+					)
+			);
+			switch (closestIndex) {
+				case 0:
+					if (activeTab !== 'bun') setActiveTab('bun');
+					break;
+				case 1:
+					if (activeTab !== 'sauce') setActiveTab('sauce');
+					break;
+				case 2:
+					if (activeTab !== 'main') setActiveTab('main');
+					break;
+				default:
+					setActiveTab('bun');
+					break;
+			}
 		}
 	};
 
-	const handleClickTab = (value: string): void => {
-		if (value === 'bun' || value === 'sauce' || value === 'main') {
-			if (activeTab !== value) setActiveTab(value);
-
-			switch (value) {
-				case 'bun':
-					groupBunRef.current?.scrollIntoView({ behavior: 'smooth' });
-					break;
-				case 'sauce':
-					groupSauceRef.current?.scrollIntoView({ behavior: 'smooth' });
-					break;
-				case 'main':
-					groupMainRef.current?.scrollIntoView({ behavior: 'smooth' });
-					break;
-			}
-		} else {
-			console.warn(`Unexpected tab value: ${value}`);
+	const handleClickTab = (tab: string) => {
+		if (activeTab !== 'bun') setActiveTab('bun');
+		switch (tab) {
+			case 'bun':
+				groupBunRef.current?.scrollIntoView({ behavior: 'smooth' });
+				break;
+			case 'sauce':
+				groupSauceRef.current?.scrollIntoView({ behavior: 'smooth' });
+				break;
+			case 'main':
+				groupMainRef.current?.scrollIntoView({ behavior: 'smooth' });
+				break;
+			default:
+				groupBunRef.current?.scrollIntoView({ behavior: 'smooth' });
+				break;
 		}
 	};
 
@@ -98,12 +88,12 @@ const BurgerIngredients: React.FC = () => {
 					position: 'absolute',
 					top: '50%',
 					left: '50%',
-					transform: 'translate(-50%, -50%)',
+					transform: "translate('-50%', '-50%')",
 				}}
 			/>
 			{isError && <>Ошибка при загрузке ингредиентов</>}
 			{data && (
-				<article className='pt-10 pb-10'>
+				<article className={`pt-10 pb-10`}>
 					<h1 className='text text_type_main-large mb-5'>Соберите бургер</h1>
 					<div ref={tabsRef} className={`${styles.tabs} mb-10`}>
 						<Tab
@@ -126,26 +116,72 @@ const BurgerIngredients: React.FC = () => {
 						</Tab>
 					</div>
 					<div
-						className={`${styles.groups}`}
+						className={`${styles.group}`}
 						onScroll={handleScrollIngredientGroup}>
-						<IngredientList
-							ingredients={data}
-							title='Булки'
-							type='bun'
-							ref={groupBunRef}
-						/>
-						<IngredientList
-							ingredients={data}
-							title='Соусы'
-							type='sauce'
-							ref={groupSauceRef}
-						/>
-						<IngredientList
-							ingredients={data}
-							title='Начинки'
-							type='main'
-							ref={groupMainRef}
-						/>
+						<section>
+							<h2 className='text text_type_main-medium' ref={groupBunRef}>
+								Булки
+							</h2>
+							<ul className={`${styles.list} mt-6 mr-2 mb-10 ml-4`}>
+								{data
+									.filter((ingredient) => ingredient.type === 'bun')
+									.map((ingredient) => (
+										<Link
+											className={styles.link}
+											key={ingredient._id}
+											to={`/ingredients/${ingredient._id}`}
+											state={{ backgroundLocation: location }}>
+											<IngredientItem
+												key={ingredient._id}
+												ingredient={ingredient}
+											/>
+										</Link>
+									))}
+							</ul>
+						</section>
+						<section>
+							<h2 className='text text_type_main-medium' ref={groupSauceRef}>
+								Соусы
+							</h2>
+							<ul className={`${styles.list} mt-6 mr-2 mb-10 ml-4`}>
+								{data
+									.filter((ingredient) => ingredient.type === 'sauce')
+									.map((ingredient) => (
+										<Link
+											className={styles.link}
+											key={ingredient._id}
+											to={`/ingredients/${ingredient._id}`}
+											state={{ backgroundLocation: location }}>
+											<IngredientItem
+												key={ingredient._id}
+												ingredient={ingredient}
+											/>
+										</Link>
+									))}
+							</ul>
+						</section>
+						<section>
+							<h2 className='text text_type_main-medium' ref={groupMainRef}>
+								Начинки
+							</h2>
+							<ul className={`${styles.list} mt-6 mr-2 mb-10 ml-4`}>
+								{data
+									.filter((ingredient) => ingredient.type === 'main')
+									.map((ingredient) => (
+										<Link
+											className={styles.link}
+											key={ingredient._id}
+											to={`/ingredients/${ingredient._id}`}
+											state={{ backgroundLocation: location }}
+											replace={true}>
+											<IngredientItem
+												key={ingredient._id}
+												ingredient={ingredient}
+											/>
+										</Link>
+									))}
+							</ul>
+						</section>
 					</div>
 				</article>
 			)}

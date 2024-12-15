@@ -1,15 +1,20 @@
-import { useEffect } from 'react';
+import { ReactNode, useEffect } from 'react';
 
 import { createPortal } from 'react-dom';
 import { GridLoader } from 'react-spinners';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './modal.module.css';
 import { useAppSelector } from '../../services/slices';
-import { IModalProps } from '../../utils/prop-types';
 import ModalOverlay from './modal-overlay/modal-overlay';
 import useShowModal from '../../hooks/use-show-modal';
 
 const modalRoot = document.getElementById('modals');
+
+export interface IModalProps {
+	text?: string;
+	onClose: () => void;
+	children: ReactNode;
+}
 
 const Modal = ({ children, onClose }: IModalProps) => {
 	const { isLoading } = useAppSelector((store) => store.orderDetails);

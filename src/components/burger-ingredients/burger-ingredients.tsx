@@ -8,7 +8,7 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { getIngredients } from '../../services/slices/burger-ingredients-slice';
 import styles from './burger-ingredients.module.css';
 import { IngredientType } from '../../types';
-import IngredientItem from './ingredient-list/ingredient-item/ingredient-item';
+import IngredientItem from './ingredient-item/ingredient-item';
 import { useAppDispatch, useAppSelector } from '../../services/slices';
 
 const BurgerIngredients = () => {

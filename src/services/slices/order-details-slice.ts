@@ -1,6 +1,12 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { requestSendOrder } from '../../utils/api';
-import { IOrderData } from '../../utils/prop-types';
+import { ServerOrderResponse } from '../../types/api';
+
+export interface IOrderData {
+	isLoading: boolean;
+	isError: boolean;
+	data: ServerOrderResponse | null;
+}
 
 const initialState: IOrderData = {
 	data: null,

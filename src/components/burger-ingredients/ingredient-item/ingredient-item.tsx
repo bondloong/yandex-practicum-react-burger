@@ -1,7 +1,7 @@
 /* eslint-disable eslint-comments/disable-enable-pair */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-import { useMemo } from 'react';
+import { FC, useMemo } from 'react';
 import { useDrag } from 'react-dnd';
 import {
 	Counter,
@@ -9,11 +9,15 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './ingredient-item.module.css';
-import { useAppDispatch, useAppSelector } from '../../../../services/slices';
-import { IIngredientItemProps } from '../../../../utils/prop-types';
-import { setData } from '../../../../services/slices/ingredient-details-slice';
+import { useAppDispatch, useAppSelector } from '../../../services/slices';
+import { setData } from '../../../services/slices/ingredient-details-slice';
+import { Ingredient } from '../../../types';
 
-const IngredientItem = ({ ingredient }: IIngredientItemProps) => {
+interface IngredientItemProps {
+	ingredient: Ingredient;
+}
+
+const IngredientItem: FC<IngredientItemProps> = ({ ingredient }) => {
 	const { bun, ingredients } = useAppSelector(
 		(store) => store.burgerConstructor
 	);

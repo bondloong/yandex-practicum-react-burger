@@ -1,33 +1,31 @@
 /* stylelint-disable declaration-property-unit-allowed-list */
 
 .item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  list-style: none;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	list-style: none;
 }
 
-
 .element {
-  background-color: var(--background);
+	background-color: var(--background);
 }
 
 .element > span * {
-  display: none;
+	display: none;
 }
 
 .element > span span {
-  display: block;
-  margin: 0;
-  line-height: 40px;
-  text-align: center;
+	display: block;
+	margin: 0;
+	line-height: 40px;
+	text-align: center;
 }
 
 .hiddenThumbnail [class*='constructor-element__image'] {
-  display: none !important;
+	display: none !important;
 }
 
 .hiddenPrice [class*='constructor-element__price'] {
-  display: none !important;
+	display: none !important;
 }
-

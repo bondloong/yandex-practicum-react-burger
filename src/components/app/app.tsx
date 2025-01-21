@@ -21,6 +21,10 @@ import {
 	RouteOnlyAuth,
 	RouteOnlyUnAuth,
 } from '../protected-route-element/protected-route-element';
+import { getIngredients } from '../../services/slices/burger-ingredients-slice';
+import FeedPage from '../../pages/feed';
+import OrderPage from '../../pages/order';
+import OrderInfo from '../order-info';
 
 function App() {
 	const location = useLocation();
@@ -29,6 +33,7 @@ function App() {
 
 	useEffect(() => {
 		dispatch(checkUserAuth());
+		dispatch(getIngredients());
 	}, [dispatch]);
 
 	return (
@@ -60,7 +65,13 @@ function App() {
 						element={<RouteOnlyAuth component={<OrdersPage />} />}
 					/>
 				</Route>
+				<Route path='/feed' element={<FeedPage />} />
 				<Route path='/ingredients/:id' element={<IngredientPage />} />
+				<Route path='/feed/:number' element={<OrderPage />} />
+				<Route
+					path='/profile/orders/:number'
+					element={<RouteOnlyAuth component={<OrderPage />} />}
+				/>
 				<Route path='*' element={<NotFound404 />} />
 			</Routes>
 
@@ -79,6 +90,22 @@ function App() {
 						element={
 							<Modal onClose={() => navigate('/', { replace: true })}>
 								<OrderDetails />
+							</Modal>
+						}
+					/>
+					<Route
+						path='/feed/:number'
+						element={
+							<Modal onClose={() => navigate(-1)}>
+								<OrderInfo />
+							</Modal>
+						}
+					/>
+					<Route
+						path='/profile/orders/:number'
+						element={
+							<Modal onClose={() => navigate(-1)}>
+								<OrderInfo />
 							</Modal>
 						}
 					/>

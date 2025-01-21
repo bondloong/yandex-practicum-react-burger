@@ -1,27 +1,27 @@
 import { useEffect } from 'react';
 
-import styles from './orders.module.css';
+import OrderList from '../../components/order-list';
+import OrderCounter from '../../components/order-counter';
+import styles from './feed.module.css';
 import { connect, disconnect } from '../../services/slices/websocket-slice';
 import { GridLoader } from 'react-spinners';
 import { WebsocketStatus } from '../../types/websocket';
 import { useAppDispatch, useAppSelector } from '../../services/slices';
-import OrderList from '../../components/order-list';
 
-export default function OrdersPage() {
+export default function FeedPage() {
 	const dispatch = useAppDispatch();
 	const { status, orders } = useAppSelector((store) => store.webSocket);
 
 	useEffect(() => {
-		const accessToken = localStorage.getItem('accessToken');
-		if (accessToken)
-			dispatch(connect(`orders?token=${accessToken.substring(7)}`));
+		dispatch(connect('orders/all'));
+
 		return () => {
 			dispatch(disconnect());
 		};
 	}, [dispatch]);
 
 	return (
-		<div className={styles.orders}>
+		<main className={`${styles.main} pr-5 pl-5`}>
 			<GridLoader
 				color='#fff'
 				loading={status !== WebsocketStatus.ONLINE}
@@ -32,13 +32,13 @@ export default function OrdersPage() {
 					transform: "translate('-50%', '-50%')",
 				}}
 			/>
+			<h1 className='text text_type_main-large mt-10'>Лента заказов</h1>
 			{status === WebsocketStatus.ONLINE && orders.length > 0 && (
-				<OrderList
-					isShowStatus={true}
-					linkEndpoint='/profile/orders'
-					isOrdersReverse={true}
-				/>
+				<div className={`${styles.container} mt-5`}>
+					<OrderList isShowStatus={false} linkEndpoint='/feed' />
+					<OrderCounter />
+				</div>
 			)}
-		</div>
+		</main>
 	);
 }

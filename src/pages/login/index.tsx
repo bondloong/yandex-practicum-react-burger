@@ -20,7 +20,7 @@ export default function LoginPage() {
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		const form = e.target as HTMLFormElement; // Явное указание типа
+		const form = e.target as HTMLFormElement;
 		const isError = form.querySelector('.input__error');
 		if (isError) return;
 

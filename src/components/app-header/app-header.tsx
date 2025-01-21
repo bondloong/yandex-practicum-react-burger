@@ -6,16 +6,16 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './app-header.module.css';
 import { useAppSelector } from '../../services/slices';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 const AppHeader = () => {
 	const { user } = useAppSelector((store) => store.user);
 
 	return (
 		<header className={styles.header}>
-			<span className={styles.logo}>
+			<Link to='/' className={styles.logo}>
 				<Logo />
-			</span>
+			</Link>
 			<nav className={`${styles.nav} pt-4 pb-4`}>
 				<ul className={styles.list}>
 					<li className={`${styles.item}`}>
@@ -36,7 +36,7 @@ const AppHeader = () => {
 					</li>
 					<li className={`${styles.item}`}>
 						<NavLink
-							to='/list'
+							to='/feed'
 							className={({ isActive }) =>
 								isActive
 									? `${styles.link}`

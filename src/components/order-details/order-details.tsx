@@ -24,7 +24,7 @@ const OrderDetails: React.FC = () => {
 				<>
 					<span
 						className={`${styles.order_number} text text_type_digits-large`}>
-						{data.order.number}
+						{data.number}
 					</span>
 					<span className='text text_type_main-medium mt-8'>
 						идентификатор заказа

@@ -6,7 +6,7 @@ import {
 	requestUpdateUser,
 	requestUser,
 } from '../../utils/api';
-import { User } from '../../types';
+import { UserStore } from '../../types/store';
 
 export const loginUser = createAsyncThunk('user/login', login);
 export const registerUser = createAsyncThunk('user/register', register);
@@ -32,10 +32,10 @@ export const checkUserAuth = createAsyncThunk(
 	}
 );
 
-const initialState: { user: User | null; isAuthChecked: boolean } = {
+const initialState = {
 	user: null,
 	isAuthChecked: false,
-};
+} satisfies UserStore as UserStore;
 
 const userSlice = createSlice({
 	name: 'user',
@@ -55,7 +55,7 @@ const userSlice = createSlice({
 				state.user = null;
 			})
 			.addCase(getUser.fulfilled, (state, action) => {
-				state.user = action.payload.user;
+				state.user = action.payload;
 			})
 			.addCase(checkUserAuth.fulfilled, (state) => {
 				state.isAuthChecked = true;
@@ -64,7 +64,7 @@ const userSlice = createSlice({
 				state.isAuthChecked = true;
 			})
 			.addCase(updateUser.fulfilled, (state, action) => {
-				state.user = action.payload.user;
+				state.user = action.payload;
 			});
 	},
 });

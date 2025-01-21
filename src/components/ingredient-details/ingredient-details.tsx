@@ -12,8 +12,8 @@ import { GridLoader } from 'react-spinners';
 const IngredientDetails = () => {
 	const { id } = useParams();
 	const ingredient = useAppSelector((store) => store.ingredientDetails.data);
-	const { isLoading, data } = useAppSelector(
-		(state) => state.burgerIngredients
+	const { isLoading, data: ingredients } = useAppSelector(
+		(store) => store.burgerIngredients
 	);
 
 	const dispatch = useAppDispatch();
@@ -25,13 +25,15 @@ const IngredientDetails = () => {
 	}, [dispatch]);
 
 	useEffect(() => {
-		if (data && id) {
-			const foundIngredient = data.find((item) => item._id === id);
-			if (foundIngredient) dispatch(setData(foundIngredient));
+		if (!ingredient && ingredients) {
+			const currentIngredient = ingredients.find(
+				(ingredient) => ingredient._id === id
+			);
+			if (currentIngredient) dispatch(setData(currentIngredient));
 		}
-	}, [data, id, dispatch, ingredient]);
+	}, [ingredients, id, dispatch, ingredient]);
 
-	if (!data) return null;
+	if (!ingredient) return null;
 
 	return (
 		<div className={styles.ingredient}>

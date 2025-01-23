@@ -1,6 +1,6 @@
-import { WebSocketStore } from './../../../../sprint-4/src/types/store';
 import { createAction, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { WebsocketStatus, WSOrderResponse } from '../../types/websocket';
+import { WebSocketStore } from '../../types/store';
 
 export const wsOpen = createAction('webSocket/open');
 export const wsClose = createAction('webSocket/close');

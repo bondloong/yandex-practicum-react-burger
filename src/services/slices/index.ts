@@ -1,4 +1,3 @@
-import { orderDetailsActions } from './../../../../sprint-4/src/services/slices/order-details-slice';
 import { combineSlices, configureStore, ThunkDispatch } from '@reduxjs/toolkit';
 import { useDispatch, useSelector } from 'react-redux';
 import burgerIngredientsSlice from './burger-ingredients-slice';
@@ -8,7 +7,7 @@ import burgerConstructorSlice, {
 import ingredientDetailsSlice, {
 	ingredientDetailsActions,
 } from './ingredient-details-slice';
-import orderDetailsSlice from './order-details-slice';
+import orderDetailsSlice, { orderDetailsActions } from './order-details-slice';
 import userSlice from './user-slice';
 import { WebsocketStatus } from '../../types/websocket';
 import { socketMiddleware } from '../middleware/socketMiddleware';

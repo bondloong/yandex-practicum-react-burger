@@ -9,7 +9,6 @@ import ingredientDetailsSlice, {
 } from './ingredient-details-slice';
 import orderDetailsSlice, { orderDetailsActions } from './order-details-slice';
 import userSlice from './user-slice';
-import { WebsocketStatus } from '../../types/websocket';
 import { socketMiddleware } from '../middleware/socketMiddleware';
 import ordersSlice, { webSocketActions, wsActions } from './websocket-slice';
 
@@ -22,21 +21,6 @@ export const rootReducer = combineSlices(
 	ordersSlice
 );
 
-const preloadedState = {
-	burgerIngredients: { data: null, isLoading: false, isError: false },
-	burgerConstructor: { bun: null, ingredients: [] },
-	ingredientDetails: { data: null },
-	orderDetails: { data: null, isLoading: false, isError: false },
-	user: { user: null, isAuthChecked: false },
-	webSocket: {
-		status: WebsocketStatus.OFFLINE,
-		orders: [],
-		total: 0,
-		totalToday: 0,
-		error: '',
-	},
-};
-
 const wsUrl = 'wss://norma.nomoreparties.space/';
 
 export const store = configureStore({
@@ -44,7 +28,6 @@ export const store = configureStore({
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware().concat(socketMiddleware(wsUrl, wsActions)),
 	devTools: process.env.NODE_ENV !== 'production',
-	preloadedState,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

@@ -2,7 +2,7 @@
 
 A web application developed as part of the [React Developer course from Yandex practicum.](https://practicum.yandex.ru/react/?from=catalog)
 
-`Demo:` [https://bondloong.github.io/react-burger/](https://bondloong.github.io/react-burger/)
+`Demo:` [https://bondloong.github.io/yandex-practicum-react-burger/](https://bondloong.github.io/yandex-practicum-react-burger/)
 
 ## Create React App
 

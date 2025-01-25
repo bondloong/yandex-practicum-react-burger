@@ -32,7 +32,7 @@ export const checkUserAuth = createAsyncThunk(
 	}
 );
 
-const initialState = {
+export const initialState = {
 	user: null,
 	isAuthChecked: false,
 } satisfies UserStore as UserStore;

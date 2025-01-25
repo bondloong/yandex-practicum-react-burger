@@ -13,7 +13,7 @@ import {
 	clearConstructor,
 } from '../../services/slices/burger-сonstructor-slice';
 import { ArrayData, Ingredient } from '../../types';
-import { useAppDispatch, useAppSelector } from '../../services/slices';
+import { useAppDispatch, useAppSelector } from '../../services/store';
 
 const BurgerConstructor = () => {
 	const { bun, ingredients } = useAppSelector(

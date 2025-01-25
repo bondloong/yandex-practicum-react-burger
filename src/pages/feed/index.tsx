@@ -6,7 +6,7 @@ import styles from './feed.module.css';
 import { connect, disconnect } from '../../services/slices/websocket-slice';
 import { GridLoader } from 'react-spinners';
 import { WebsocketStatus } from '../../types/websocket';
-import { useAppDispatch, useAppSelector } from '../../services/slices';
+import { useAppDispatch, useAppSelector } from '../../services/store';
 
 export default function FeedPage() {
 	const dispatch = useAppDispatch();

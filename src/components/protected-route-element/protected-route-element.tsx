@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { GridLoader } from 'react-spinners';
-import { useAppSelector } from '../../services/slices';
+import { useAppSelector } from '../../services/store';
 
 const ProtectedRouteElement = ({
 	component,

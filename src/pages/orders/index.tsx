@@ -4,7 +4,7 @@ import styles from './orders.module.css';
 import { connect, disconnect } from '../../services/slices/websocket-slice';
 import { GridLoader } from 'react-spinners';
 import { WebsocketStatus } from '../../types/websocket';
-import { useAppDispatch, useAppSelector } from '../../services/slices';
+import { useAppDispatch, useAppSelector } from '../../services/store';
 import OrderList from '../../components/order-list';
 
 export default function OrdersPage() {

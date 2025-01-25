@@ -1,5 +1,5 @@
 import AppHeader from '../app-header/app-header';
-import { useAppDispatch } from '../../services/slices';
+import { useAppDispatch } from '../../services/store';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { checkUserAuth } from '../../services/slices/user-slice';

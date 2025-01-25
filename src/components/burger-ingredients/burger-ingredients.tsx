@@ -9,7 +9,7 @@ import { getIngredients } from '../../services/slices/burger-ingredients-slice';
 import styles from './burger-ingredients.module.css';
 import { IngredientType } from '../../types';
 import IngredientItem from './ingredient-item/ingredient-item';
-import { useAppDispatch, useAppSelector } from '../../services/slices';
+import { useAppDispatch, useAppSelector } from '../../services/store';
 
 const BurgerIngredients = () => {
 	const { isLoading, isError, data } = useAppSelector(
@@ -117,7 +117,8 @@ const BurgerIngredients = () => {
 					</div>
 					<div
 						className={`${styles.group}`}
-						onScroll={handleScrollIngredientGroup}>
+						onScroll={handleScrollIngredientGroup}
+						data-testid='ingredient-group'>
 						<section>
 							<h2 className='text text_type_main-medium' ref={groupBunRef}>
 								Булки

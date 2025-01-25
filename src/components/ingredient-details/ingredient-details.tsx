@@ -5,7 +5,7 @@ import {
 	setData,
 } from '../../services/slices/ingredient-details-slice';
 import styles from './ingredient-details.module.css';
-import { useAppDispatch, useAppSelector } from '../../services/slices';
+import { useAppDispatch, useAppSelector } from '../../services/store';
 import { useParams } from 'react-router-dom';
 import { GridLoader } from 'react-spinners';
 

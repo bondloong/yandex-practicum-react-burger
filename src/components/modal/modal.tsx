@@ -4,7 +4,7 @@ import { createPortal } from 'react-dom';
 import { GridLoader } from 'react-spinners';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './modal.module.css';
-import { useAppSelector } from '../../services/slices';
+import { useAppSelector } from '../../services/store';
 import ModalOverlay from './modal-overlay/modal-overlay';
 import useShowModal from '../../hooks/use-show-modal';
 
@@ -62,8 +62,11 @@ const Modal = ({ children, onClose }: IModalProps) => {
 				) : (
 					<>
 						<ModalOverlay onClick={handleCloseModal} />
-						<div className={styles.modal}>
-							<button className={styles.close} onClick={handleCloseModal}>
+						<div className={styles.modal} data-testid='modal'>
+							<button
+								className={styles.close}
+								onClick={handleCloseModal}
+								data-testid='modal-close'>
 								<CloseIcon type='primary' />
 							</button>
 							{children}

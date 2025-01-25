@@ -11,7 +11,7 @@ export const wsError = createAction<string, 'webSocket/error'>(
 	'webSocket/error'
 );
 
-const initialState: WebSocketStore = {
+export const initialState: WebSocketStore = {
 	status: WebsocketStatus.OFFLINE,
 	orders: [],
 	total: 0,

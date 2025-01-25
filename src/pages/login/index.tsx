@@ -8,7 +8,7 @@ import {
 import useFormData from '../../hooks/use-form-data';
 import styles from './login.module.css';
 import { loginUser } from '../../services/slices/user-slice';
-import { useAppDispatch } from '../../services/slices';
+import { useAppDispatch } from '../../services/store';
 
 export default function LoginPage() {
 	const { formData, onChangeFormData, checkFormData } = useFormData({

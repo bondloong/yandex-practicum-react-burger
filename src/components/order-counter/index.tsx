@@ -1,4 +1,4 @@
-import { useAppSelector } from '../../services/slices';
+import { useAppSelector } from '../../services/store';
 import styles from './order-counter.module.css';
 
 const OrderCounter = () => {

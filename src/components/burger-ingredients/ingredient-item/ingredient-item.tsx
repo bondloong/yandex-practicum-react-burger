@@ -9,7 +9,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './ingredient-item.module.css';
-import { useAppDispatch, useAppSelector } from '../../../services/slices';
+import { useAppDispatch, useAppSelector } from '../../../services/store';
 import { setData } from '../../../services/slices/ingredient-details-slice';
 import { Ingredient } from '../../../types';
 
@@ -50,7 +50,9 @@ const IngredientItem: FC<IngredientItemProps> = ({ ingredient }) => {
 			<li
 				onClick={handleShowIngredientDetails}
 				className={styles.ingredient}
-				ref={dragRef}>
+				ref={dragRef}
+				data-testid='ingredient-item'
+				>
 				{counter && <Counter count={counter} size='default' />}
 				<img src={image} alt={name} className='ml-4 mr-4' />
 				<span className={`${styles.price} text text_type_digits-default`}>

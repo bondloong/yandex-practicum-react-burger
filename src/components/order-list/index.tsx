@@ -9,7 +9,7 @@ import {
 import styles from './order-list.module.css';
 import { Statuses } from '../../types/common';
 import { getUniqIngredientsWithAmount } from '../../utils/func';
-import { useAppSelector } from '../../services/slices';
+import { useAppSelector } from '../../services/store';
 
 interface OrderListProps {
 	isShowStatus: boolean;

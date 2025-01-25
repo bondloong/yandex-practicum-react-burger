@@ -1,16 +1,21 @@
 import { combineSlices, configureStore, ThunkDispatch } from '@reduxjs/toolkit';
 import { useDispatch, useSelector } from 'react-redux';
-import burgerIngredientsSlice from './burger-ingredients-slice';
+import burgerIngredientsSlice from './slices/burger-ingredients-slice';
 import burgerConstructorSlice, {
 	burgerConstructorActions,
-} from './burger-сonstructor-slice';
+} from './slices/burger-сonstructor-slice';
 import ingredientDetailsSlice, {
 	ingredientDetailsActions,
-} from './ingredient-details-slice';
-import orderDetailsSlice, { orderDetailsActions } from './order-details-slice';
-import userSlice from './user-slice';
-import { socketMiddleware } from '../middleware/socketMiddleware';
-import ordersSlice, { webSocketActions, wsActions } from './websocket-slice';
+} from './slices/ingredient-details-slice';
+import orderDetailsSlice, {
+	orderDetailsActions,
+} from './slices/order-details-slice';
+import userSlice from './slices/user-slice';
+import { socketMiddleware } from './middleware/socketMiddleware';
+import ordersSlice, {
+	webSocketActions,
+	wsActions,
+} from './slices/websocket-slice';
 
 export const rootReducer = combineSlices(
 	burgerIngredientsSlice,

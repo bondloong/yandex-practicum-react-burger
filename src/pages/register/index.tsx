@@ -9,7 +9,7 @@ import {
 import useFormData from '../../hooks/use-form-data';
 import styles from './register.module.css';
 import { registerUser } from '../../services/slices/user-slice';
-import { useAppDispatch } from '../../services/slices';
+import { useAppDispatch } from '../../services/store';
 import { FormEvent } from 'react';
 
 export default function RegisterPage() {

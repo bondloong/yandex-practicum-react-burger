@@ -5,7 +5,7 @@ import {
 	ProfileIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './app-header.module.css';
-import { useAppSelector } from '../../services/slices';
+import { useAppSelector } from '../../services/store';
 import { Link, NavLink } from 'react-router-dom';
 
 const AppHeader = () => {

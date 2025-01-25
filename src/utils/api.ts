@@ -117,6 +117,18 @@ export const requestUpdateUser = (data: FormData) =>
 		(res) => (res.success ? res.user : Promise.reject(res))
 	);
 
+export const requestUserAuth = () => {
+	if (localStorage.getItem('accessToken')) {
+		return requestUser().catch((res) => {
+			localStorage.removeItem('accessToken');
+			localStorage.removeItem('refreshToken');
+			return Promise.reject(res);
+		});
+	} else {
+		return Promise.reject();
+	}
+};
+
 export const passwordReset = (data: FormData) =>
 	requestPost<ServerMessageResponse>('password-reset/reset', data);
 export const passwordResetRequest = (data: FormData) =>

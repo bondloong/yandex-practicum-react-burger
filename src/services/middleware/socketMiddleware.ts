@@ -4,7 +4,7 @@ import {
 	ActionCreatorWithPayload,
 } from '@reduxjs/toolkit';
 import { refreshToken } from '../../utils/api';
-import { AppActions, AppDispatch, RootState } from '../slices';
+import { AppActions, AppDispatch, RootState } from '../store';
 
 export type wsActionTypes = {
 	wsConnect: ActionCreatorWithPayload<string>;

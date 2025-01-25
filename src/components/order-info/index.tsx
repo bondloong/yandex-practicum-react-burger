@@ -14,7 +14,7 @@ import {
 	updateOrder,
 } from '../../services/slices/order-details-slice';
 import { getUniqIngredientsWithAmount } from '../../utils/func';
-import { useAppDispatch, useAppSelector } from '../../services/slices';
+import { useAppDispatch, useAppSelector } from '../../services/store';
 
 const OrderInfo = () => {
 	const { number } = useParams();

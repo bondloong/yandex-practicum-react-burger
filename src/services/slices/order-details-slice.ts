@@ -3,7 +3,7 @@ import { requestGetOrder, requestSendOrder } from '../../utils/api';
 import { Order } from '../../types/common';
 import { OrderDetailsStore } from '../../types/store';
 
-const initialState = {
+export const initialState = {
 	data: null,
 	isLoading: false,
 	isError: false,

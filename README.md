@@ -2,7 +2,7 @@
 
 A web application developed as part of the [React Developer course from Yandex practicum.](https://practicum.yandex.ru/react/?from=catalog)
 
-`Demo:` [https://yandex-practicum-react-burger-22kui2oqz-bondloongs-projects.vercel.app/](https://yandex-practicum-react-burger-22kui2oqz-bondloongs-projects.vercel.app/)
+`Demo:` [https://yandex-practicum-react-burger.vercel.app/](https://yandex-practicum-react-burger.vercel.app/)
 
 ## Create React App
 

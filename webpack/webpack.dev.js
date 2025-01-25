@@ -6,7 +6,7 @@ module.exports = {
 	devtool: 'eval-source-map',
 	devServer: {
 		historyApiFallback: true,
-		static: path.resolve(__dirname, './dist'),
+		static: path.resolve(__dirname, './build'),
 		// compress: true, // это ускорит загрузку в режиме разработки
 		port: 3000, 
 		open: true, 

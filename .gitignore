@@ -16,3 +16,4 @@ lerna-debug.log*
 .env.test
 
 build
+dist

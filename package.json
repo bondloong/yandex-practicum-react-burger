@@ -22,7 +22,6 @@
 		"transformIgnorePatterns": []
 	},
 	"devDependencies": {
-		"@4tw/cypress-drag-drop": "^2.2.5",
 		"@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
 		"@svgr/webpack": "^8.0.1",
 		"@types/jest": "^29.5.14",

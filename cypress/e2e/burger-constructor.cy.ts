@@ -39,6 +39,7 @@ describe('добавление ингредиента в конструктор'
   //    .contains('Краторная булка N-200i (верх)')
   //    .should('exist');
   //  cy.get('[data-testid="constructor-item-bun"]:last')
+  
   //    .contains('Краторная булка N-200i (низ)')
   //    .should('exist');
   //});

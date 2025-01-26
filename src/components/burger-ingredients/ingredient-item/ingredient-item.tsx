@@ -51,8 +51,7 @@ const IngredientItem: FC<IngredientItemProps> = ({ ingredient }) => {
 				onClick={handleShowIngredientDetails}
 				className={styles.ingredient}
 				ref={dragRef}
-				data-testid='ingredient-item'
-				>
+				data-testid='ingredient-item'>
 				{counter && <Counter count={counter} size='default' />}
 				<img src={image} alt={name} className='ml-4 mr-4' />
 				<span className={`${styles.price} text text_type_digits-default`}>

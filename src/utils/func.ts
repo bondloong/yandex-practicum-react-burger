@@ -11,6 +11,6 @@ export const getUniqIngredientsWithAmount = (
 			({
 				...ingredients?.find((ingredient) => ingredient._id === ingredientId),
 				amount: ingredientsId.filter((id) => id === ingredientId).length,
-			} as IngredientWithAmount)
+			}) as IngredientWithAmount
 	);
 };

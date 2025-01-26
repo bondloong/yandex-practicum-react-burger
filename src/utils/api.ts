@@ -1,4 +1,4 @@
-import { FormData, ArrayData, Ingredients } from '../types';
+import { FormData, ArrayData } from '../types';
 import {
 	RequestData,
 	HTTPMethods,
@@ -9,6 +9,7 @@ import {
 	ServerMessageResponse,
 	ServerResponse,
 	ServerOrderResponse,
+	ServerOrdersResponse,
 } from '../types/api';
 
 export default function request<T>(
@@ -35,25 +36,25 @@ const requestPost = <T>(endpoint: string, data: FormData): Promise<T> => {
 	);
 };
 
+export const refreshToken = () => {
+	const token = localStorage.getItem('refreshToken');
+	if (token) {
+		return requestPost<ServerRefreshResponse>('auth/token', { token }).then(
+			(refreshData) => {
+				localStorage.setItem('refreshToken', refreshData.refreshToken);
+				localStorage.setItem('accessToken', refreshData.accessToken);
+				return refreshData;
+			}
+		);
+	} else {
+		return Promise.reject();
+	}
+};
+
 const requestWithRefresh = async <T>(
 	endpoint: string,
 	options: Options
 ): Promise<T> => {
-	const refreshToken = () => {
-		const token = localStorage.getItem('refreshToken');
-		if (token) {
-			return requestPost<ServerRefreshResponse>('auth/token', { token }).then(
-				(refreshData) => {
-					localStorage.setItem('refreshToken', refreshData.refreshToken);
-					localStorage.setItem('accessToken', refreshData.accessToken);
-					return refreshData;
-				}
-			);
-		} else {
-			return Promise.reject();
-		}
-	};
-
 	try {
 		return await request<T>(endpoint, options);
 	} catch (err) {
@@ -87,13 +88,10 @@ const requestWithAccessToken = <T>(
 	}
 };
 
-export const fetchIngredients = async (): Promise<Ingredients> => {
-	const response = await request<ServerIngredientsResponse>('ingredients');
-	if (response.success) {
-		return response.data;
-	} else {
-		throw new Error('Failed to fetch ingredients');
-	}
+export const fetchIngredients = () => {
+	return request<ServerIngredientsResponse>('ingredients').then((res) =>
+		res.success ? res.data : Promise.reject(res)
+	);
 };
 
 export const login = (data: FormData) =>
@@ -111,9 +109,25 @@ export const register = (data: FormData) =>
 	});
 
 export const requestUser = () =>
-	requestWithAccessToken<ServerUserResponse>('auth/user');
+	requestWithAccessToken<ServerUserResponse>('auth/user').then((res) =>
+		res.success ? res.user : Promise.reject(res)
+	);
 export const requestUpdateUser = (data: FormData) =>
-	requestWithAccessToken<ServerUserResponse>('auth/user', 'PATCH', data);
+	requestWithAccessToken<ServerUserResponse>('auth/user', 'PATCH', data).then(
+		(res) => (res.success ? res.user : Promise.reject(res))
+	);
+
+export const requestUserAuth = () => {
+	if (localStorage.getItem('accessToken')) {
+		return requestUser().catch((res) => {
+			localStorage.removeItem('accessToken');
+			localStorage.removeItem('refreshToken');
+			return Promise.reject(res);
+		});
+	} else {
+		return Promise.reject();
+	}
+};
 
 export const passwordReset = (data: FormData) =>
 	requestPost<ServerMessageResponse>('password-reset/reset', data);
@@ -135,4 +149,10 @@ export const logout = () => {
 };
 
 export const requestSendOrder = (data: ArrayData) =>
-	requestWithAccessToken<ServerOrderResponse>('orders', 'POST', data);
+	requestWithAccessToken<ServerOrderResponse>('orders', 'POST', data).then(
+		(res) => (res.success ? res.order : Promise.reject(res))
+	);
+export const requestGetOrder = (orderNumber: string) =>
+	request<ServerOrdersResponse>(`orders/${orderNumber}`).then((res) =>
+		res.success ? res.orders[0] : Promise.reject(res)
+	);

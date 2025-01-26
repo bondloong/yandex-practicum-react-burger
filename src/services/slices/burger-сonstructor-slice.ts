@@ -4,7 +4,7 @@ import { nanoid } from 'nanoid';
 import { ConstructorIngredient, Ingredient } from '../../types';
 import { BurgerConstructorStore } from '../../types/store';
 
-const initialState = {
+export const initialState = {
 	bun: null,
 	ingredients: [],
 } satisfies BurgerConstructorStore as BurgerConstructorStore;

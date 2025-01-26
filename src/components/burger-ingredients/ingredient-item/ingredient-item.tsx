@@ -1,7 +1,7 @@
 /* eslint-disable eslint-comments/disable-enable-pair */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-import { useMemo } from 'react';
+import { FC, useMemo } from 'react';
 import { useDrag } from 'react-dnd';
 import {
 	Counter,
@@ -9,11 +9,15 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './ingredient-item.module.css';
-import { useAppDispatch, useAppSelector } from '../../../../services/slices';
-import { IIngredientItemProps } from '../../../../utils/prop-types';
-import { setData } from '../../../../services/slices/ingredient-details-slice';
+import { useAppDispatch, useAppSelector } from '../../../services/store';
+import { setData } from '../../../services/slices/ingredient-details-slice';
+import { Ingredient } from '../../../types';
 
-const IngredientItem = ({ ingredient }: IIngredientItemProps) => {
+interface IngredientItemProps {
+	ingredient: Ingredient;
+}
+
+const IngredientItem: FC<IngredientItemProps> = ({ ingredient }) => {
 	const { bun, ingredients } = useAppSelector(
 		(store) => store.burgerConstructor
 	);
@@ -46,7 +50,8 @@ const IngredientItem = ({ ingredient }: IIngredientItemProps) => {
 			<li
 				onClick={handleShowIngredientDetails}
 				className={styles.ingredient}
-				ref={dragRef}>
+				ref={dragRef}
+				data-testid='ingredient-item'>
 				{counter && <Counter count={counter} size='default' />}
 				<img src={image} alt={name} className='ml-4 mr-4' />
 				<span className={`${styles.price} text text_type_digits-default`}>

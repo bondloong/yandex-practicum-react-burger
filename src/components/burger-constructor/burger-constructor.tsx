@@ -8,9 +8,12 @@ import {
 import styles from './burger-constructor.module.css';
 import ConstructorList from './constructor-list/constructor-list';
 import { sendOrder } from '../../services/slices/order-details-slice';
-import { addIngredient } from '../../services/slices/burger-сonstructor-slice';
+import {
+	addIngredient,
+	clearConstructor,
+} from '../../services/slices/burger-сonstructor-slice';
 import { ArrayData, Ingredient } from '../../types';
-import { useAppDispatch, useAppSelector } from '../../services/slices';
+import { useAppDispatch, useAppSelector } from '../../services/store';
 
 const BurgerConstructor = () => {
 	const { bun, ingredients } = useAppSelector(
@@ -46,7 +49,9 @@ const BurgerConstructor = () => {
 					bun._id,
 				],
 			};
-			dispatch(sendOrder(preparedData));
+			dispatch(sendOrder(preparedData)).then(() =>
+				dispatch(clearConstructor())
+			);
 			navigate('/', { state: { backgroundLocation: location } });
 		}
 	};

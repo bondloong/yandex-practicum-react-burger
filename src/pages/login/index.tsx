@@ -8,7 +8,7 @@ import {
 import useFormData from '../../hooks/use-form-data';
 import styles from './login.module.css';
 import { loginUser } from '../../services/slices/user-slice';
-import { useAppDispatch } from '../../services/slices';
+import { useAppDispatch } from '../../services/store';
 
 export default function LoginPage() {
 	const { formData, onChangeFormData, checkFormData } = useFormData({
@@ -20,7 +20,7 @@ export default function LoginPage() {
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		const form = e.target as HTMLFormElement; // Явное указание типа
+		const form = e.target as HTMLFormElement;
 		const isError = form.querySelector('.input__error');
 		if (isError) return;
 

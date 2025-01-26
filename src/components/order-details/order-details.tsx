@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { clearOrder } from '../../services/slices/order-details-slice';
 import done from '../../images/done.gif';
 import styles from './order-details.module.css';
-import { useAppDispatch, useAppSelector } from '../../services/slices';
+import { useAppDispatch, useAppSelector } from '../../services/store';
 import { Navigate } from 'react-router-dom';
 
 const OrderDetails: React.FC = () => {
@@ -23,8 +23,9 @@ const OrderDetails: React.FC = () => {
 			{data ? (
 				<>
 					<span
-						className={`${styles.order_number} text text_type_digits-large`}>
-						{data.order.number}
+						className={`${styles.order_number} text text_type_digits-large`}
+						data-testid='order-number'>
+						{data.number}
 					</span>
 					<span className='text text_type_main-medium mt-8'>
 						идентификатор заказа

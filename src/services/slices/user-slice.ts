@@ -5,8 +5,9 @@ import {
 	register,
 	requestUpdateUser,
 	requestUser,
+	requestUserAuth,
 } from '../../utils/api';
-import { User } from '../../types';
+import { UserStore } from '../../types/store';
 
 export const loginUser = createAsyncThunk('user/login', login);
 export const registerUser = createAsyncThunk('user/register', register);
@@ -16,26 +17,15 @@ export const updateUser = createAsyncThunk(
 	'user/updateUser',
 	requestUpdateUser
 );
-
 export const checkUserAuth = createAsyncThunk(
 	'user/checkUserAuth',
-	async (_, thunkAPI) => {
-		if (localStorage.getItem('accessToken')) {
-			await thunkAPI
-				.dispatch(getUser())
-				.unwrap()
-				.catch(() => {
-					localStorage.removeItem('accessToken');
-					localStorage.removeItem('refreshToken');
-				});
-		}
-	}
+	requestUserAuth
 );
 
-const initialState: { user: User | null; isAuthChecked: boolean } = {
+export const initialState = {
 	user: null,
 	isAuthChecked: false,
-};
+} satisfies UserStore as UserStore;
 
 const userSlice = createSlice({
 	name: 'user',
@@ -55,16 +45,17 @@ const userSlice = createSlice({
 				state.user = null;
 			})
 			.addCase(getUser.fulfilled, (state, action) => {
-				state.user = action.payload.user;
+				state.user = action.payload;
 			})
-			.addCase(checkUserAuth.fulfilled, (state) => {
+			.addCase(checkUserAuth.fulfilled, (state, action) => {
+				state.user = action.payload;
 				state.isAuthChecked = true;
 			})
 			.addCase(checkUserAuth.rejected, (state) => {
 				state.isAuthChecked = true;
 			})
 			.addCase(updateUser.fulfilled, (state, action) => {
-				state.user = action.payload.user;
+				state.user = action.payload;
 			});
 	},
 });

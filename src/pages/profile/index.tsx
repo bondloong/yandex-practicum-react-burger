@@ -10,7 +10,7 @@ import {
 import { logoutUser, updateUser } from '../../services/slices/user-slice';
 import useFormData from '../../hooks/use-form-data';
 import styles from './profile.module.css';
-import { useAppDispatch, useAppSelector } from '../../services/slices';
+import { useAppDispatch, useAppSelector } from '../../services/store';
 import { User } from '../../types';
 
 export default function ProfilePage() {

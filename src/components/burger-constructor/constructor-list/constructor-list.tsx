@@ -12,7 +12,7 @@ import {
 import ConstructorItemBun from './constructor-item/constructor-item-bun/constructor-item-bun';
 import ConstructorItemSkeleton from './constructor-item/constructor-item-skeleton/constructor-item-skeleton';
 import ConstructorItem from './constructor-item/constructor-item';
-import { useAppSelector } from '../../../services/slices';
+import { useAppSelector } from '../../../services/store';
 
 interface ConstructorListProps {
 	onDropHandler: (ingredient: Ingredient) => void;
@@ -82,7 +82,10 @@ const ConstructorList: FC<ConstructorListProps> = memo(
 			);
 
 		return (
-			<section className='mb-10' ref={dropTarget}>
+			<section
+				className='mb-10'
+				ref={dropTarget}
+				data-testid='constructor-drop-target'>
 				{addBun('top')}
 
 				<ul className={`${styles.list}`}>

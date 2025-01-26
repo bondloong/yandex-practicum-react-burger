@@ -7,7 +7,7 @@ import {
 
 import styles from './constructor-item.module.css';
 import { ConstructorIngredient } from '../../../../types';
-import { useAppDispatch } from '../../../../services/slices';
+import { useAppDispatch } from '../../../../services/store';
 import {
 	removeIngredient,
 	sortIngredients,

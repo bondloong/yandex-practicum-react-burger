@@ -1,3 +1,9 @@
+const GROUP_SELECTOR = '[data-testid="ingredient-group"]';
+const MODAL_SELECTOR = '[data-testid="modal"]';
+const MODAL_CLOSE_SELECTOR = '[data-testid="modal-close"]';
+const CONSTRUCTOR_DROP_TARGET_SELECTOR = '[data-testid="constructor-drop-target"]';
+const ORDER_NUMBER_SELECTOR = '[data-testid=order-number]';
+
 beforeEach(() => {
   cy.intercept('GET', 'api/auth/user', { fixture: 'user.json' }).as('checkUserAuth');
   cy.intercept('GET', 'api/ingredients', { fixture: 'ingredients.json' }).as('getIngredients');
@@ -15,39 +21,28 @@ afterEach(() => {
 
 describe('сведения об ингредиентах в модальном окне', () => {
   beforeEach(() => {
-    cy.get('[data-testid="ingredient-group"]').as('group');
+    cy.get(GROUP_SELECTOR).as('group');
   });
 
   it('модальное окно должно открываться и закрываться правильно', () => {
     cy.get('@group').contains('Краторная булка N-200i').should('exist').click();
-    cy.get('[data-testid="modal"]').should('exist');
-    cy.get('[data-testid="modal-close"]').should('exist').click();
-    cy.get('[data-testid="modal"]').should('not.exist');
+    cy.get(MODAL_SELECTOR).should('exist');
+    cy.get(MODAL_CLOSE_SELECTOR).should('exist').click();
+    cy.get(MODAL_SELECTOR).should('not.exist');
   });
 
   it('URL и содержимое модального окна должны быть правильными', () => {
     cy.get('@group').contains('Краторная булка N-200i').should('exist').click();
     cy.url().should('contain', 'ingredients/643d69a5c3f7b9001cfa093c');
-    cy.get('[data-testid="modal"]').should('contain.text', 'Детали ингредиента').and('contain.text', 'Краторная булка N-200iКалории, ккал420Белки, г80Жиры, г24Углеводы, г53');
+    cy.get(MODAL_SELECTOR).should('contain.text', 'Детали ингредиента').and('contain.text', 'Краторная булка N-200iКалории, ккал420Белки, г80Жиры, г24Углеводы, г53');
   });
 });
 
 describe('добавление ингредиента в конструктор', () => {
-  //it('добавление булочки работает правильно', () => {
-  //  cy.addIngredient('Краторная булка N-200i');
-  //  cy.get('[data-testid="constructor-item-bun"]:first')
-  //    .contains('Краторная булка N-200i (верх)')
-  //    .should('exist');
-  //  cy.get('[data-testid="constructor-item-bun"]:last')
-  
-  //    .contains('Краторная булка N-200i (низ)')
-  //    .should('exist');
-  //});
-
   it('добавление ингредиента работает правильно', () => {
     cy.addIngredient('Соус Spicy-X');
 
-    cy.get('[data-testid="constructor-drop-target"]')
+    cy.get(CONSTRUCTOR_DROP_TARGET_SELECTOR)
       .contains('Соус Spicy-X')
       .should('exist');
   });
@@ -68,6 +63,6 @@ describe('создание заказа', () => {
     cy.addIngredient('Хрустящие минеральные кольца');
 
     cy.get('button').contains('Оформить заказ').click();
-    cy.get('[data-testid=order-number]').contains('34536').should('exist');
+    cy.get(ORDER_NUMBER_SELECTOR).contains('34536').should('exist');
   });
 });
